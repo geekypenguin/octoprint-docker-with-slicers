@@ -1,48 +1,5 @@
-FROM resin/rpi-raspbian:latest
+FROM kennethjiang/cura_n_slic3r:latest
 MAINTAINER kenneth.jiang+dockerhub@gmail.com
-
-ARG SLIC3R_VERSION=1.1.7
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python-pip \
-    python-dev \
-    git \
-    build-essential \
-    libav-tools \
-    avrdude \
-    curl \
-    cura-engine \
-    vim
-
-RUN echo "The installation of Slic3r takes a long time. PLease be patient"
-RUN echo "Installing libraries and dependencies required by Slic3r..."
-RUN apt-get install --no-install-recommends \
-    libboost-system-dev \
-    libboost-thread-dev \
-    libgtk2.0-dev \
-    libwxgtk2.8-dev \
-    libwx-perl \
-    libmodule-build-perl \
-    libnet-dbus-perl \
-    cpanminus \
-    libextutils-cbuilder-perl \
-    gcc-4.7 \
-    g++-4.7 \
-    libwx-perl \
-    libperl-dev
-
-RUN apt-get clean \
-	&& rm -rf /tmp/* /var/tmp/*  \
-    && rm -rf /var/lib/apt/lists/*
-
-
-WORKDIR /build
-RUN cpanm --force AAR/Boost-Geometry-Utils-0.06.tar.gz Math::Clipper Math::ConvexHull Math::ConvexHull::MonotoneChain Math::Geometry::Voronoi Math::PlanePath Moo IO::Scalar Class::XSAccessor Growl::GNTP XML::SAX::ExpatXS PAR::Packer
-RUN echo "Cloning Slic3r repository..."
-RUN git clone https://github.com/alexrj/Slic3r.git
-RUN echo "Building and testing Scli3r..."
-# I cheated here. Build.PL needs to be manually changed so that it has 'my @cpanm_args = ("--force");'
-RUN cd Slic3r && git checkout ${SLIC3R_VERSION} && perl Build.PL
 
 RUN echo "Cloning OctoPrint repository..."
 WORKDIR /octoprint
