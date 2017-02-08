@@ -3,13 +3,15 @@
 
 Thanks to : http://octoprint.org/
 
-Contains: Octoprint, curl and avconv
+Contains: Octoprint, Cura Engine, Slic3r, curl and avconv
 
+## Start OctoPrint
 ```
-docker run -d -p 5000 --device=/dev/ttyUSB0 --name=mycontainername mrwyss/octoprint
+docker run -d -p 5000:5000 --device=/dev/ttyUSB0 --name=my-octoprint-containername kennethjiang/octoprint-with-slicers
 ```
 
-.
+## Go to http://localhost:5000/
+
 
 **QNAP Notes**
 

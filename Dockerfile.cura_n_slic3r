@@ -36,7 +36,7 @@ RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 
-WORKDIR /build
+WORKDIR /
 RUN cpanm --force AAR/Boost-Geometry-Utils-0.06.tar.gz Math::Clipper Math::ConvexHull Math::ConvexHull::MonotoneChain Math::Geometry::Voronoi Math::PlanePath Moo IO::Scalar Class::XSAccessor Growl::GNTP XML::SAX::ExpatXS PAR::Packer
 RUN echo "Cloning Slic3r repository..."
 RUN git clone https://github.com/alexrj/Slic3r.git
