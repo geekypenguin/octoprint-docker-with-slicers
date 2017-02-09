@@ -1,9 +1,8 @@
 # Octoprint Dockerfile
 
+This image let you launch OctoPrint container with Cura and Slic3r plugins configured
 
-Thanks to : http://octoprint.org/
-
-Contains: Octoprint, Cura Engine, Slic3r, curl and avconv
+Thanks to: http://octoprint.org/
 
 ## Start OctoPrint
 ```

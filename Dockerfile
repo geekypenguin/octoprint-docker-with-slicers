@@ -15,6 +15,8 @@ RUN python setup.py install
 RUN echo "Installing Slic3r plugin"
 RUN pip install https://github.com/javierma/OctoPrint-Slic3r/archive/master.zip
 
+RUN curl -sSL https://raw.githubusercontent.com/kennethjiang/octoprint-docker-with-slicers/master/config_cura_plugin.py | python
+
 RUN echo "Starting OctoPrint..."
 VOLUME /data
 WORKDIR /data
