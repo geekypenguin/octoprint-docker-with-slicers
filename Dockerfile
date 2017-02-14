@@ -18,7 +18,8 @@ RUN pip install https://github.com/javierma/OctoPrint-Slic3r/archive/master.zip
 
 RUN echo "Starting OctoPrint..."
 VOLUME /data
-RUN curl -sSL https://raw.githubusercontent.com/kennethjiang/octoprint-docker-with-slicers/master/config_cura_plugin.py | python
+RUN curl -o config.yaml 'https://raw.githubusercontent.com/kennethjiang/octoprint-docker-with-slicers/master/config.yaml'
+
 WORKDIR /data
 EXPOSE 5000
 CMD ["octoprint",  "--iknowwhatimdoing", "--basedir" ,"/data"]
