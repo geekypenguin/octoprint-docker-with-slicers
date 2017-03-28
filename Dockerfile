@@ -1,9 +1,12 @@
 FROM kennethjiang/cura_n_slic3r:latest
 MAINTAINER kenneth.jiang+dockerhub@gmail.com
 
+ARG version
+
 RUN echo "Cloning OctoPrint repository..."
 WORKDIR /octoprint
-RUN git clone https://github.com/foosel/OctoPrint.git /octoprint
+RUN curl -o octoprint.tar.gz -L https://github.com/foosel/OctoPrint/archive/${version}.tar.gz
+RUN tar -xvf octoprint.tar.gz --strip 1
 RUN echo "Building OctoPrint..."
 # RUN pip install --upgrade pip
 # Workaround for a pip version mismatch
