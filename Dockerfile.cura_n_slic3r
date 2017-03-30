@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN echo "The installation of Slic3r takes a long time. PLease be patient"
 RUN echo "Installing libraries and dependencies required by Slic3r..."
-RUN apt-get install --no-install-recommends \
+RUN apt-get install --yes --no-install-recommends \
     libboost-system-dev \
     libboost-thread-dev \
     libgtk2.0-dev \
