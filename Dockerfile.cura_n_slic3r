@@ -1,4 +1,5 @@
-FROM resin/rpi-raspbian:latest
+FROM ubuntu:14.04
+
 MAINTAINER kenneth.jiang+dockerhub@gmail.com
 
 ARG SLIC3R_VERSION=1.1.7

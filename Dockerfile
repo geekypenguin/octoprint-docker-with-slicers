@@ -1,4 +1,4 @@
-FROM kennethjiang/cura_n_slic3r:latest
+FROM kennethjiang/cura_n_slic3r:ubuntu
 MAINTAINER kenneth.jiang+dockerhub@gmail.com
 
 ARG version
