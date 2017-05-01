@@ -1,0 +1,18 @@
+FROM kennethjiang/cura_n_slic3r:ubuntu
+MAINTAINER kenneth.jiang+dockerhub@gmail.com
+
+ARG version
+
+RUN echo "Set up mjpg-streamer..."
+RUN apt-get update && apt-get -y --force-yes install cmake libjpeg8-dev
+RUN apt-get -y --force-yes --no-install-recommends install imagemagick libav-tools libv4l-dev
+RUN cd / && git clone https://github.com/kennethjiang/mjpg-streamer.git
+WORKDIR /mjpg-streamer
+RUN mv mjpg-streamer-experimental/* .
+RUN make
+ADD jpgs /mjpg-streamer/jpgs
+
+EXPOSE 8080
+
+RUN echo "Starting mjpg-streamer..."
+CMD ["/mjpg-streamer/mjpg_streamer", "-o", "output_http.so -w /mjpg-streamer/www", "-i", "input_file.so -f /mjpg-streamer/jpgs -e -d 0.1"]
