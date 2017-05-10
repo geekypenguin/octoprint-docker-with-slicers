@@ -1,8 +1,6 @@
 FROM resin/rpi-raspbian:latest
 MAINTAINER kenneth.jiang+dockerhub@gmail.com
 
-ARG SLIC3R_VERSION=1.1.7
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python-pip \
     python-dev \
@@ -11,12 +9,32 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libav-tools \
     avrdude \
     curl \
-    cura-engine \
+    wget \
+    gcc-4.7 \
+    g++-4.7 \
+    unzip \
     vim
+
+# Cura Engine
+ARG CURAENGINE_VERSION=15.04.6
+
+RUN echo "--- Installing CuraEngine"
+WORKDIR /
+RUN wget -OCuraEngine-${CURAENGINE_VERSION}.zip https://github.com/Ultimaker/CuraEngine/archive/${CURAENGINE_VERSION}.zip
+RUN unzip CuraEngine-${CURAENGINE_VERSION}.zip
+WORKDIR /CuraEngine-${CURAENGINE_VERSION}
+RUN make CXX=g++-4.9 VERSION=${CURAENGINE_VERSION}
+RUN cp build/CuraEngine /usr/local/bin/cura_engine
+
+
+# Slic3r
+ARG SLIC3R_VERSION=1.1.7
 
 RUN echo "The installation of Slic3r takes a long time. PLease be patient"
 RUN echo "Installing libraries and dependencies required by Slic3r..."
 RUN apt-get install --yes --no-install-recommends \
+    libboost-all-dev \
+    libboost-geometry-utils-perl \
     libboost-system-dev \
     libboost-thread-dev \
     libgtk2.0-dev \
@@ -26,8 +44,6 @@ RUN apt-get install --yes --no-install-recommends \
     libnet-dbus-perl \
     cpanminus \
     libextutils-cbuilder-perl \
-    gcc-4.7 \
-    g++-4.7 \
     libwx-perl \
     libperl-dev
 
@@ -37,9 +53,6 @@ RUN apt-get clean \
 
 
 WORKDIR /
-RUN cpanm --force AAR/Boost-Geometry-Utils-0.06.tar.gz Math::Clipper Math::ConvexHull Math::ConvexHull::MonotoneChain Math::Geometry::Voronoi Math::PlanePath Moo IO::Scalar Class::XSAccessor Growl::GNTP XML::SAX::ExpatXS PAR::Packer
-RUN echo "Cloning Slic3r repository..."
-RUN git clone https://github.com/alexrj/Slic3r.git
+COPY build_slic3r.sh /build_slic3r.sh
 RUN echo "Building and testing Scli3r..."
-# I cheated here. Build.PL needs to be manually changed so that it has 'my @cpanm_args = ("--force");'
-RUN cd Slic3r && git checkout ${SLIC3R_VERSION} && perl Build.PL
+RUN /build_slic3r.sh
