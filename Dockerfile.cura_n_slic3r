@@ -28,7 +28,7 @@ RUN cp build/CuraEngine /usr/local/bin/cura_engine
 
 
 # Slic3r
-ARG SLIC3R_VERSION=1.1.7
+ARG SLIC3R_VERSION=1.3.0
 
 RUN echo "The installation of Slic3r takes a long time. PLease be patient"
 RUN echo "Installing libraries and dependencies required by Slic3r..."
